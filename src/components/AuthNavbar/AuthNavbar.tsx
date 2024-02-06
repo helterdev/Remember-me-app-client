@@ -5,7 +5,7 @@ import { Slider } from '../Slider/Slider';
 
 export default function AuthNavbar() {
   return (
-    <header>
+    <header className='bg-slate-200'>
       <div className='h-24 w-4/5 mx-auto flex justify-between items-center bg-transparent py-8'>
         <div>
           <Link className='flex items-center' href={'/home'}>
@@ -15,7 +15,6 @@ export default function AuthNavbar() {
         </div>
         <nav>
           <ul className='flex items-center gap-x-2'>
-            {/* <li className='font-bold'>Nombre</li> */}
             <li>
               <Slider />
             </li>

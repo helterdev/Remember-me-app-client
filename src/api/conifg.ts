@@ -5,9 +5,4 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-export const productsIntance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_PRODUCTS_API,
-  withCredentials: false,
-});
-
 export default instance;

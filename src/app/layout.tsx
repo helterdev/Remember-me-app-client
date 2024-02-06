@@ -5,6 +5,7 @@ import { LoadingProvider } from '@/context/LoadingContex';
 import { Toaster } from 'sonner';
 import { AuthContextProvider } from '@/context/AuthContext';
 import SessionAuthProvider from '@/context/SessionAuthProvider';
+import { TaskProvider } from '@/context/TaskContext';
 
 const inter = Inter({ subsets: ['latin'] });
 const montserrat = Montserrat({
@@ -28,12 +29,14 @@ export default function RootLayout({
     <html lang='en'>
       <body className={`${montserrat.className}`}>
         <SessionAuthProvider>
-          <LoadingProvider>
-            <AuthContextProvider>
-              {children}
-              <Toaster position='top-right' />
-            </AuthContextProvider>
-          </LoadingProvider>
+          <TaskProvider>
+            <LoadingProvider>
+              <AuthContextProvider>
+                {children}
+                <Toaster position='top-right' />
+              </AuthContextProvider>
+            </LoadingProvider>
+          </TaskProvider>
         </SessionAuthProvider>
       </body>
     </html>
