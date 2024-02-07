@@ -9,10 +9,10 @@ import { TaskProvider } from '@/context/TaskContext';
 
 const inter = Inter({ subsets: ['latin'] });
 const montserrat = Montserrat({
-  weight: ['200', '400', '700'],
+  weight: ['200', '300', '400', '500', '700'],
   subsets: ['latin'],
   style: ['normal', 'italic'],
-  display: 'swap',
+  // display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -29,14 +29,14 @@ export default function RootLayout({
     <html lang='en'>
       <body className={`${montserrat.className}`}>
         <SessionAuthProvider>
-          <TaskProvider>
-            <LoadingProvider>
+          <LoadingProvider>
+            <TaskProvider>
               <AuthContextProvider>
                 {children}
                 <Toaster position='top-right' />
               </AuthContextProvider>
-            </LoadingProvider>
-          </TaskProvider>
+            </TaskProvider>
+          </LoadingProvider>
         </SessionAuthProvider>
       </body>
     </html>

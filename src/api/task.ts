@@ -5,8 +5,8 @@ export const createTask = async (data: TaskInput) => {
   return await axios.post('/task', data);
 };
 
-export const alltask = async () => {
-  return await axios.get('task');
+export const allTask = async () => {
+  return await axios.get('/task');
 };
 
 export const getIdTask = async () => {

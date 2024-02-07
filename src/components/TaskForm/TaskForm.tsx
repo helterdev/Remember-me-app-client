@@ -6,26 +6,34 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/UI/alert-dialog';
-import { Button } from '../UI/button';
-import { useState } from 'react';
+import { Button as FormButton } from '../UI/button';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { TaskInput } from '@/interfaces/TaskForm';
+import { useTask } from '@/hooks/useTask/useTask';
+import { useLoadingContext } from '@/hooks/useLoading/useLoadingContext';
+import { Loader } from '../UI/Loader/Loader';
 export const TaskForm = () => {
-  const [open, setOpen] = useState<boolean>(false);
+  const {
+    postTask,
+    modalState: { openState, openSetState },
+  } = useTask();
+  const { loading } = useLoadingContext();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<TaskInput>();
 
-  const onsubmit: SubmitHandler<TaskInput> = async (data) => {};
+  const onsubmit: SubmitHandler<TaskInput> = async (data) => {
+    postTask(data);
+  };
   return (
     <>
-      <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialog open={openState} onOpenChange={openSetState}>
         <AlertDialogTrigger asChild>
-          <Button variant='outline' className=' font-semibold'>
+          <FormButton variant='outline' className=' font-semibold'>
             Add Task +
-          </Button>
+          </FormButton>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -77,14 +85,16 @@ export const TaskForm = () => {
               </div>
             </div>
             <div className='flex justify-between'>
-              <Button type='submit'>Add</Button>
-              <Button
+              <FormButton type='submit'>
+                {loading ? <Loader /> : 'Add'}
+              </FormButton>
+              <FormButton
                 type='button'
                 variant={'destructive'}
-                onClick={() => setOpen(false)}
+                onClick={() => openSetState(false)}
               >
                 Cancel
-              </Button>
+              </FormButton>
             </div>
           </form>
         </AlertDialogContent>
