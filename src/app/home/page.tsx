@@ -1,6 +1,9 @@
 'use client';
 
+import { Pen } from '@/components/Pen/Pen';
 import { TaskForm } from '@/components/TaskForm/TaskForm';
+import { Trash } from '@/components/Trash/Trash';
+import { ButtonEdit } from '@/components/UI/ButtonEdit/ButtonEdit';
 import { Loader } from '@/components/UI/Loader/Loader';
 import { useLoadingContext } from '@/hooks/useLoading/useLoadingContext';
 import { useTask } from '@/hooks/useTask/useTask';
@@ -42,15 +45,23 @@ export default function Products() {
         <TaskForm />
       </div>
       <div>
-        <ul className='flex flex-col gap-4 sm: sm:flex-row sm:flex-wrap px-4'>
+        <ul className='flex flex-col gap-4 py-4 justify-center sm: sm:flex-row sm:flex-wrap px-4'>
           {state?.tasks.map((task) => {
             return (
               <li
                 key={task._id}
-                className='box-border p-8 border flex flex-col rounded-xl gap-2 justify-around sm: w-56'
+                className='box-border p-8 border flex flex-col rounded-xl gap-2 justify-around relative sm: w-56'
               >
-                <h2 className='font-bold text-base'>{task.title}</h2>
-                <p className='text-sm'>{task.description}</p>
+                <div className='absolute top-[2px] right-[2px]'>
+                  <Trash />
+                </div>
+                <div className='absolute top-[2px] right-[2rem]'>
+                  <Pen />
+                </div>
+                <h2 className='font-bold text-base break-words'>
+                  {task.title}
+                </h2>
+                <p className='text-sm break-words'>{task.description}</p>
                 <span className='text-xs'>Author: {task.user.username}</span>
               </li>
             );

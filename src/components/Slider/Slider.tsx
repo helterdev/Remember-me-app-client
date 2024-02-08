@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '../UI/button';
+import { Button } from '@/components/UI/button';
 import Link from 'next/link';
 import {
   DropdownMenu,
@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from '../UI/dropdown-menu';
+} from '@/components/UI/dropdown-menu';
 import { useSession, signOut } from 'next-auth/react';
 
 export function Slider() {
