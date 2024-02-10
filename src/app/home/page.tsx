@@ -12,8 +12,6 @@ import { useEffect } from 'react';
 export default function Products() {
   const { getAllTask, state } = useTask();
   const { loading } = useLoadingContext();
-  console.log(state);
-
   useEffect(() => {
     getAllTask();
   }, []);
@@ -53,16 +51,19 @@ export default function Products() {
                 className='box-border p-8 border flex flex-col rounded-xl gap-2 justify-around relative sm: w-56'
               >
                 <div className='absolute top-[2px] right-[2px]'>
-                  <Trash />
+                  <Trash id={task._id} />
                 </div>
                 <div className='absolute top-[2px] right-[2rem]'>
-                  <Pen />
+                  <Pen id={task._id} />
                 </div>
                 <h2 className='font-bold text-base break-words'>
                   {task.title}
                 </h2>
                 <p className='text-sm break-words'>{task.description}</p>
                 <span className='text-xs'>Author: {task.user.username}</span>
+                <span className='text-xs'>
+                  Date: {new Date(task.createdAt).toLocaleString()}
+                </span>
               </li>
             );
           })}

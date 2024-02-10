@@ -3,7 +3,7 @@ import { useLoadingContext } from '@/hooks/useLoading/useLoadingContext';
 import { TaskInput } from '@/interfaces/TaskForm';
 import axios, { AxiosError, AxiosPromise } from 'axios';
 import { Dispatch, createContext, useState } from 'react';
-import { allTask, createTask } from '@/api/task';
+import { allTask, createTask, deleteRequest, getIdTask } from '@/api/task';
 import { useNotify } from '@/hooks/useNotify/useNotify';
 interface Props {
   children: React.ReactNode;
@@ -14,6 +14,10 @@ interface TaskProvider {
   postTask: (data: TaskInput) => void;
   modalState: { openState: boolean; openSetState: Dispatch<boolean> };
   getAllTask: () => void;
+  deleteTask: (id: string) => void;
+  editModalState: { editOpen: boolean; setEditOpen: Dispatch<boolean> };
+  getTask: (id: string) => void;
+  task: TaskData | null;
 }
 
 interface DataTask {
@@ -37,11 +41,19 @@ interface DataTask {
 interface initialState {
   tasks: DataTask[] | [];
 }
+
+interface TaskData {
+  task: { title: string; description: string };
+}
+
 export const TaskContext = createContext<TaskProvider>({} as TaskProvider);
 
 export const TaskProvider = ({ children }: Props) => {
   const [state, setState] = useState<initialState | null>(null);
   const [open, setOpen] = useState<boolean>(false);
+  const [editOpen, setEditOpen] = useState<boolean>(false);
+  const [task, setTask] = useState<TaskData | null>(null);
+
   const notify = useNotify();
 
   const { isLoading, stopLoading } = useLoadingContext();
@@ -86,13 +98,54 @@ export const TaskProvider = ({ children }: Props) => {
     }
   };
 
+  const getTask = async (id: string) => {
+    try {
+      const response = await getIdTask(id);
+      if (response.statusText === 'OK') {
+        return setTask(response.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const deleteTask = async (id: string) => {
+    try {
+      const response = await deleteRequest(id);
+      if (response.statusText === 'OK') {
+        const newState: initialState = {
+          ...state,
+          //@ts-ignore
+          tasks: state?.tasks.filter((task) => task._id !== id),
+        };
+        setState(newState);
+      }
+    } catch (error) {}
+  };
+
   const modalState = {
     openState: open,
     openSetState: setOpen,
   };
 
+  const editModalState = {
+    editOpen,
+    setEditOpen,
+  };
+
   return (
-    <TaskContext.Provider value={{ state, postTask, modalState, getAllTask }}>
+    <TaskContext.Provider
+      value={{
+        state,
+        postTask,
+        modalState,
+        getAllTask,
+        deleteTask,
+        editModalState,
+        getTask,
+        task,
+      }}
+    >
       {children}
     </TaskContext.Provider>
   );

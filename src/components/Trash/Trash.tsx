@@ -1,3 +1,4 @@
+import { useTask } from '@/hooks/useTask/useTask';
 import { ButtonDelete } from '../UI/ButtonDelete/ButtonDelete';
 import {
   AlertDialog,
@@ -10,7 +11,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/UI/alert-dialog';
-export const Trash = () => {
+interface Props {
+  id: string;
+}
+export const Trash = ({ id }: Props) => {
+  const { deleteTask } = useTask();
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -24,7 +29,12 @@ export const Trash = () => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogAction
+            className=' bg-red-500 hover:bg-red-600'
+            onClick={() => deleteTask(id)}
+          >
+            Delete
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

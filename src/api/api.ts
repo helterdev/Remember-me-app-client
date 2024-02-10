@@ -12,3 +12,7 @@ export const userRegister = async (data: InputsRegister) => {
 export const loginRequest = async (data: InputsLogin) => {
   return await axios.post(`/login`, data);
 };
+
+export const logout = async () => {
+  return await axios.post('/logout');
+};
