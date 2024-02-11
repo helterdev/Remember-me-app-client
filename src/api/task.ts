@@ -13,6 +13,10 @@ export const getIdTask = async (id: string) => {
   return await axios.get(`/task/${id}`);
 };
 
+export const updateTask = async (id: string, data: TaskInput) => {
+  return axios.put(`/task/${id}`, data);
+};
+
 export const deleteRequest = async (id: string) => {
   return axios.delete(`/task/${id}`);
 };

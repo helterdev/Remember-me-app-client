@@ -3,7 +3,13 @@ import { useLoadingContext } from '@/hooks/useLoading/useLoadingContext';
 import { TaskInput } from '@/interfaces/TaskForm';
 import axios, { AxiosError, AxiosPromise } from 'axios';
 import { Dispatch, createContext, useState } from 'react';
-import { allTask, createTask, deleteRequest, getIdTask } from '@/api/task';
+import {
+  allTask,
+  createTask,
+  deleteRequest,
+  getIdTask,
+  updateTask,
+} from '@/api/task';
 import { useNotify } from '@/hooks/useNotify/useNotify';
 interface Props {
   children: React.ReactNode;
@@ -17,7 +23,10 @@ interface TaskProvider {
   deleteTask: (id: string) => void;
   editModalState: { editOpen: boolean; setEditOpen: Dispatch<boolean> };
   getTask: (id: string) => void;
+  putTask: (id: string, data: TaskInput) => void;
   task: TaskData | null;
+  taskId: string | null;
+  setTaskId: Dispatch<string>;
 }
 
 interface DataTask {
@@ -53,6 +62,7 @@ export const TaskProvider = ({ children }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
   const [editOpen, setEditOpen] = useState<boolean>(false);
   const [task, setTask] = useState<TaskData | null>(null);
+  const [taskId, setTaskId] = useState<string | null>(null);
 
   const notify = useNotify();
 
@@ -63,7 +73,7 @@ export const TaskProvider = ({ children }: Props) => {
     try {
       const response = await createTask(data);
       if (response.status === 200) {
-        return [stopLoading(), setOpen(false)];
+        return [stopLoading(), setOpen(false), getAllTask()];
       }
       if (response.status !== 200) {
         return [stopLoading(), notify('Error al agregar tarea', 500, 'error')];
@@ -102,7 +112,18 @@ export const TaskProvider = ({ children }: Props) => {
     try {
       const response = await getIdTask(id);
       if (response.statusText === 'OK') {
-        return setTask(response.data);
+        setTask(response.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const putTask = async (id: string, data: TaskInput) => {
+    try {
+      const response = await updateTask(id, data);
+      if (response.statusText === 'OK') {
+        return [setEditOpen(false), getAllTask()];
       }
     } catch (error) {
       console.error(error);
@@ -120,7 +141,9 @@ export const TaskProvider = ({ children }: Props) => {
         };
         setState(newState);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const modalState = {
@@ -144,6 +167,9 @@ export const TaskProvider = ({ children }: Props) => {
         editModalState,
         getTask,
         task,
+        putTask,
+        taskId,
+        setTaskId,
       }}
     >
       {children}

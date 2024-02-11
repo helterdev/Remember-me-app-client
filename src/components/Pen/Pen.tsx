@@ -1,3 +1,4 @@
+'use client';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ButtonEdit } from '../UI/ButtonEdit/ButtonEdit';
 import { Button } from '../UI/button';
@@ -10,7 +11,7 @@ import {
 } from '@/components/UI/alert-dialog';
 import { TaskInput } from '@/interfaces/TaskForm';
 import { useTask } from '@/hooks/useTask/useTask';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Props {
   id: string;
@@ -21,6 +22,9 @@ export const Pen = ({ id }: Props) => {
     editModalState: { setEditOpen, editOpen },
     getTask,
     task,
+    putTask,
+    taskId,
+    setTaskId,
   } = useTask();
 
   const {
@@ -30,22 +34,38 @@ export const Pen = ({ id }: Props) => {
     setValue,
   } = useForm<TaskInput>();
 
-  if (task?.task) {
-    setValue('title', task.task.title);
-    setValue('description', task.task.description);
-  }
+  useEffect(() => {
+    setValue('title', '');
+    setValue('description', '');
 
-  const onsubmit: SubmitHandler<TaskInput> = async (data) => {};
+    if (task?.task) {
+      setValue('title', task.task.title);
+      setValue('description', task.task.description);
+    }
+    return () => {
+      setValue('title', '');
+      setValue('description', '');
+    };
+  }, [task, setValue]);
+
+  const onsubmit: SubmitHandler<TaskInput> = async (data) => {
+    putTask(taskId as string, data);
+  };
   return (
     <AlertDialog open={editOpen} onOpenChange={setEditOpen}>
       <AlertDialogTrigger asChild>
-        <span onClick={() => getTask(id)}>
+        <span
+          onClick={() => {
+            getTask(id);
+            setTaskId(id);
+          }}
+        >
           <ButtonEdit />
         </span>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Edit the task</AlertDialogTitle>
+          <AlertDialogTitle>Edit the note</AlertDialogTitle>
         </AlertDialogHeader>
         <form onSubmit={handleSubmit(onsubmit)}>
           <div className='py-6 flex justify-center items-center flex-col gap-4'>

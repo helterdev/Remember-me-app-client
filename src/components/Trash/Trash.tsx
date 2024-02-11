@@ -25,7 +25,7 @@ export const Trash = ({ id }: Props) => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Do you want to delete this task?</AlertDialogTitle>
+          <AlertDialogTitle>Do you want to delete this note?</AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
