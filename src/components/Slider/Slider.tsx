@@ -39,14 +39,23 @@ export function Slider() {
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Link href={'/home'} className='w-full h-full'>
-              View Products
+              View All Notes
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
 
         <DropdownMenuSeparator />
-        <DropdownMenuItem>GitHub</DropdownMenuItem>
+        <DropdownMenuItem>
+          {' '}
+          <a
+            href='https://github.com/helterdev/Remember-me-app-client'
+            rel='noopener, noreferrer'
+            target='_blank'
+          >
+            GitHub
+          </a>
+        </DropdownMenuItem>
         <DropdownMenuItem disabled>Support</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem

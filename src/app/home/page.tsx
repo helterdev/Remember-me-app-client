@@ -3,8 +3,6 @@
 import { Pen } from '@/components/Pen/Pen';
 import { TaskForm } from '@/components/TaskForm/TaskForm';
 import { Trash } from '@/components/Trash/Trash';
-import { ButtonEdit } from '@/components/UI/ButtonEdit/ButtonEdit';
-import { Loader } from '@/components/UI/Loader/Loader';
 import { useLoadingContext } from '@/hooks/useLoading/useLoadingContext';
 import { useTask } from '@/hooks/useTask/useTask';
 import { useEffect } from 'react';
