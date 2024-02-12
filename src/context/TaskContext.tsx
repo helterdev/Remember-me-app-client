@@ -95,6 +95,8 @@ export const TaskProvider = ({ children }: Props) => {
     isLoading();
     try {
       const response = await allTask();
+      console.log(response);
+
       if (response.status === 200) {
         stopLoading();
         setState(response.data);

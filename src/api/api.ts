@@ -1,8 +1,6 @@
 import { InputsLogin, InputsRegister } from '@/interfaces/Data';
 import axios from './conifg';
 
-const url = process.env.NEXT_PUBLIC_PRODUCTS_API || '';
-
 export const userRegister = async (data: InputsRegister) => {
   const response = await axios.post(`/register`, data);
 
