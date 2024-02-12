@@ -35,7 +35,25 @@ npm run dev
 ```
 
 
-## Screenshots
+## 📸Screenshots
 
 ![Register](/public/screenshots/register.png)
+
+![Login](/public/screenshots/login.png)
+
+![HomeNotes](/public/screenshots/notes.png)
+
+## 🛠Tech Stack
+
+**Client:** Next.js, NextAuth.js, TypeScript, TailwindCSS, ShadcnUI, Axios. 
+
+
+## 📄Feedback
+
+If you have any feedback, please reach out to us at heltherv@gmail.com
+
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
 
