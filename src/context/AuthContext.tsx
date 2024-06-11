@@ -34,10 +34,12 @@ export const AuthContextProvider = ({ children }: ProviderProps) => {
     try {
       const response = await loginRequest(data);
       if (response.status === 200) {
+        console.log(response)
         stopLoading();
         return notify('Welcome', 500, 'succes');
       }
     } catch (error) {
+      console.log("Error in signin: ", error)
       stopLoading();
       const axiosError = axios.isAxiosError(error);
       if (axiosError) {

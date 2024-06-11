@@ -1,12 +1,12 @@
-import { TaskInput } from '@/interfaces/TaskForm';
-import axios from './conifg';
+import { TaskInput } from "@/interfaces/TaskForm";
+import axios from "./axios.config";
 
 export const createTask = async (data: TaskInput) => {
-  return await axios.post('/auth/task', data);
+  return await axios.post("/auth/task", data);
 };
 
 export const allTask = async () => {
-  return await axios.get('/auth/task');
+  return await axios.get("/auth/task");
 };
 
 export const getIdTask = async (id: string) => {

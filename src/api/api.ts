@@ -1,5 +1,5 @@
-import { InputsLogin, InputsRegister } from '@/interfaces/Data';
-import axios from './conifg';
+import { InputsLogin, InputsRegister } from "@/interfaces/Data";
+import axios from "./axios.config";
 
 export const userRegister = async (data: InputsRegister) => {
   const response = await axios.post(`/register`, data);
@@ -12,5 +12,5 @@ export const loginRequest = async (data: InputsLogin) => {
 };
 
 export const logout = async () => {
-  return await axios.post('/logout');
+  return await axios.post("/logout");
 };
